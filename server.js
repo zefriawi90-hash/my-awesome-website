@@ -157,6 +157,42 @@ async function initializeDatabase() {
     });
   }
 
+  // Table for Todo List
+  db.run(`
+    CREATE TABLE IF NOT EXISTS todos (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      completed INTEGER DEFAULT 0,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+
+  // Table for Notes
+  db.run(`
+    CREATE TABLE IF NOT EXISTS notes (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      content TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+
+  // Table for Calendar Events
+  db.run(`
+    CREATE TABLE IF NOT EXISTS events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL,
+      title TEXT NOT NULL,
+      date DATE NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES users(id)
+    )
+  `);
+
   // Table for league standings
   db.run(`
     CREATE TABLE IF NOT EXISTS football_standings (
@@ -1181,6 +1217,130 @@ function calculateStandings(leagueName) {
 app.get('/api/football/live', authenticateToken, (req, res) => {
   const matches = getAll(`SELECT * FROM football_matches WHERE status = 'live'`);
   res.json({ success: true, matches });
+});
+
+// ============ TODO ROUTES ============
+
+// Get all todos
+app.get('/api/todos', authenticateToken, (req, res) => {
+  const todos = getAll("SELECT * FROM todos WHERE user_id = ? ORDER BY created_at DESC", [req.user.id]);
+  res.json({ success: true, todos });
+});
+
+// Add new todo
+app.post('/api/todos', authenticateToken, (req, res) => {
+  const { title } = req.body;
+  
+  if (!title) {
+    return res.status(400).json({ error: 'Judul wajib diisi.' });
+  }
+  
+  runQuery("INSERT INTO todos (user_id, title) VALUES (?, ?)", [req.user.id, title]);
+  const newId = getLastInsertRowid();
+  const todo = getOne("SELECT * FROM todos WHERE id = ?", [newId]);
+  
+  res.json({ success: true, message: 'Tugas ditambahkan!', todo });
+});
+
+// Update todo
+app.put('/api/todos/:id', authenticateToken, (req, res) => {
+  const { id } = req.params;
+  const { completed } = req.body;
+  
+  const existing = getOne("SELECT * FROM todos WHERE id = ? AND user_id = ?", [id, req.user.id]);
+  if (!existing) {
+    return res.status(404).json({ error: 'Tugas tidak ditemukan.' });
+  }
+  
+  runQuery("UPDATE todos SET completed = ? WHERE id = ?", [completed ? 1 : 0, id]);
+  const todo = getOne("SELECT * FROM todos WHERE id = ?", [id]);
+  
+  res.json({ success: true, message: 'Tugas diupdate!', todo });
+});
+
+// Delete todo
+app.delete('/api/todos/:id', authenticateToken, (req, res) => {
+  const { id } = req.params;
+  
+  const existing = getOne("SELECT * FROM todos WHERE id = ? AND user_id = ?", [id, req.user.id]);
+  if (!existing) {
+    return res.status(404).json({ error: 'Tugas tidak ditemukan.' });
+  }
+  
+  runQuery("DELETE FROM todos WHERE id = ?", [id]);
+  res.json({ success: true, message: 'Tugas dihapus!' });
+});
+
+// ============ NOTES ROUTES ============
+
+// Get all notes
+app.get('/api/notes', authenticateToken, (req, res) => {
+  const notes = getAll("SELECT * FROM notes WHERE user_id = ? ORDER BY created_at DESC", [req.user.id]);
+  res.json({ success: true, notes });
+});
+
+// Add new note
+app.post('/api/notes', authenticateToken, (req, res) => {
+  const { title, content } = req.body;
+  
+  if (!title) {
+    return res.status(400).json({ error: 'Judul wajib diisi.' });
+  }
+  
+  runQuery("INSERT INTO notes (user_id, title, content) VALUES (?, ?, ?)", [req.user.id, title, content || '']);
+  const newId = getLastInsertRowid();
+  const note = getOne("SELECT * FROM notes WHERE id = ?", [newId]);
+  
+  res.json({ success: true, message: 'Catatan ditambahkan!', note });
+});
+
+// Delete note
+app.delete('/api/notes/:id', authenticateToken, (req, res) => {
+  const { id } = req.params;
+  
+  const existing = getOne("SELECT * FROM notes WHERE id = ? AND user_id = ?", [id, req.user.id]);
+  if (!existing) {
+    return res.status(404).json({ error: 'Catatan tidak ditemukan.' });
+  }
+  
+  runQuery("DELETE FROM notes WHERE id = ?", [id]);
+  res.json({ success: true, message: 'Catatan dihapus!' });
+});
+
+// ============ EVENTS ROUTES ============
+
+// Get all events
+app.get('/api/events', authenticateToken, (req, res) => {
+  const events = getAll("SELECT * FROM events WHERE user_id = ? ORDER BY date ASC", [req.user.id]);
+  res.json({ success: true, events });
+});
+
+// Add new event
+app.post('/api/events', authenticateToken, (req, res) => {
+  const { title, date } = req.body;
+  
+  if (!title || !date) {
+    return res.status(400).json({ error: 'Judul dan tanggal wajib diisi.' });
+  }
+  
+  runQuery("INSERT INTO events (user_id, title, date) VALUES (?, ?, ?)", [req.user.id, title, date]);
+  const newId = getLastInsertRowid();
+  const event = getOne("SELECT * FROM events WHERE id = ?", [newId]);
+  
+  res.json({ success: true, message: 'Event ditambahkan!', event });
+});
+
+// Delete event
+app.delete('/api/events/:id', authenticateToken, (req, res) => {
+  const { id } = req.params;
+  
+  const existing = getOne("SELECT * FROM events WHERE id = ? AND user_id = ?", [id, req.user.id]);
+  if (!existing) {
+    return res.status(404).json({ error: 'Event tidak ditemukan.' });
+  }
+  
+  runQuery("DELETE FROM events WHERE id = ?", [id]);
+  res.json({ success: true, message: 'Event dihapus!' });
 });
 
 // Serve index.html for all routes (SPA support)

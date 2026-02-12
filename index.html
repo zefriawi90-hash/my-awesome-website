@@ -452,6 +452,271 @@
                 </div>
             </div>
         </section>
+
+        <!-- Todo Section -->
+        <section id="todo-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-check-square"></i> Todo List</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="todo-input" placeholder="Tambah tugas baru..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                        <button class="btn btn-primary" onclick="addTodo()">
+                            <i class="fas fa-plus"></i> Tambah
+                        </button>
+                    </div>
+                    
+                    <div id="todo-list">
+                        <p style="color: rgba(255,255,255,0.5); text-align: center; padding: 40px;">
+                            <i class="fas fa-clipboard-list" style="font-size: 3rem; margin-bottom: 15px;"></i><br>
+                            Belum ada tugas
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-sticky-note"></i> Catatan</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="note-title" placeholder="Judul catatan" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                        <button class="btn btn-primary" onclick="addNote()">
+                            <i class="fas fa-plus"></i> Tambah
+                        </button>
+                    </div>
+                    
+                    <textarea id="note-content" placeholder="Isi catatan..." rows="4" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; margin-bottom: 20px;"></textarea>
+                    
+                    <div id="notes-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px;">
+                        <p style="color: rgba(255,255,255,0.5); text-align: center; padding: 40px; grid-column: 1 / -1;">
+                            <i class="fas fa-notes-medical" style="font-size: 3rem; margin-bottom: 15px;"></i><br>
+                            Belum ada catatan
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-calendar-alt"></i> Kalender</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <button class="btn btn-secondary" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h3 id="calendar-month" style="color: white;"></h3>
+                        <button class="btn btn-secondary" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="color: white; margin-bottom: 15px;">Tambah Event</h4>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <input type="date" id="event-date" style="padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                            <input type="text" id="event-title" placeholder="Judul event" style="flex: 1; min-width: 200px; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                            <button class="btn btn-primary" onclick="addEvent()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="events-list" style="margin-top: 20px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section id="calculator-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-calculator"></i> Kalkulator</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="max-width: 320px; margin: 0 auto;">
+                        <input type="text" id="calc-display" readonly style="width: 100%; padding: 20px; font-size: 24px; text-align: right; border-radius: 8px; border: none; background: rgba(0,0,0,0.3); color: white; margin-bottom: 15px;">
+                        
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                            <button class="btn btn-secondary" onclick="calcAppend('7')">7</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('8')">8</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('9')">9</button>
+                            <button class="btn btn-primary" onclick="calcAppend('/')">/</button>
+                            
+                            <button class="btn btn-secondary" onclick="calcAppend('4')">4</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('5')">5</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('6')">6</button>
+                            <button class="btn btn-primary" onclick="calcAppend('*')">×</button>
+                            
+                            <button class="btn btn-secondary" onclick="calcAppend('1')">1</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('2')">2</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('3')">3</button>
+                            <button class="btn btn-primary" onclick="calcAppend('-')">-</button>
+                            
+                            <button class="btn btn-secondary" onclick="calcAppend('0')">0</button>
+                            <button class="btn btn-secondary" onclick="calcAppend('.')">.</button>
+                            <button class="btn btn-danger" onclick="calcClear()">C</button>
+                            <button class="btn btn-primary" onclick="calcAppend('+')">+</button>
+                        </div>
+                        
+                        <button class="btn" style="width: 100%; margin-top: 10px; background: #10b981; color: white; font-size: 18px; padding: 15px;" onclick="calcEqual()">
+                            <i class="fas fa-equals"></i> =
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timer Section -->
+        <section id="timer-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-stopwatch"></i> Timer</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div style="text-align: center;">
+                        <div id="timer-display" style="font-size: 72px; color: white; margin: 30px 0; font-family: monospace;">25:00</div>
+                        
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="timerStart()" id="timer-start-btn">
+                                <i class="fas fa-play"></i> Start
+                            </button>
+                            <button class="btn btn-secondary" onclick="timerPause()" id="timer-pause-btn" style="display: none;">
+                                <i class="fas fa-pause"></i> Pause
+                            </button>
+                            <button class="btn btn-danger" onclick="timerReset()">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                        </div>
+                        
+                        <div style="margin-top: 30px;">
+                            <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">Pomodoro Presets:</p>
+                            <button class="btn btn-secondary" onclick="timerSet(25)">25 min</button>
+                            <button class="btn btn-secondary" onclick="timerSet(5)">5 min</button>
+                            <button class="btn btn-secondary" onclick="timerSet(15)">15 min</button>
+                            <button class="btn btn-secondary" onclick="timerSet(60)">60 min</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1><i class="fas fa-cog"></i> Pengaturan</h1>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary" onclick="showSection('dashboard')">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="color: white; margin-bottom: 20px;">Ganti Background</h3>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <input type="text" id="bg-url" placeholder="Masukkan URL gambar..." style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+                        <button class="btn btn-primary" onclick="changeBackground()">
+                            <i class="fas fa-check"></i> Ganti
+                        </button>
+                    </div>
+                    
+                    <p style="color: rgba(255,255,255,0.5); margin-bottom: 15px;">atau pilih preset:</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1578632767115-351597cf2477?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Dark Anime</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Space</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Galaxy</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Nebula</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Stars</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Milky Way</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Earth</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Sunset</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1475274047050-1d0c0975c63e?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Night Sky</p>
+                        </div>
+                        <div onclick="changeBackgroundPreset('https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=3840&q=80')" style="cursor: pointer; border-radius: 10px; overflow: hidden; border: 2px solid transparent; transition: 0.3s;" onmouseover="this.style.borderColor='white'" onmouseout="this.style.borderColor='transparent'">
+                            <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=400&q=80" style="width: 100%; height: 120px; object-fit: cover;">
+                            <p style="color: white; padding: 10px; margin: 0; background: rgba(0,0,0,0.5); font-size: 12px;">Aurora</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="resetBackground()" style="margin-top: 20px;">
+                        <i class="fas fa-undo"></i> Reset ke Default
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Toast Container -->
@@ -564,6 +829,7 @@
 
     <!-- Scripts - Main JS first, then auth, dashboard, admin -->
     <script src="js/main.js"></script>
+    <script src="js/extra.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/admin.js"></script>

@@ -222,6 +222,16 @@ function showSection(sectionName) {
         targetSection.classList.add('active');
     }
     
+    // Load data for specific sections
+    if (sectionName === 'todo' && typeof loadTodos === 'function') {
+        loadTodos();
+    } else if (sectionName === 'notes' && typeof loadNotes === 'function') {
+        loadNotes();
+    } else if (sectionName === 'calendar' && typeof renderCalendar === 'function') {
+        renderCalendar();
+        loadEvents();
+    }
+    
     // Update navigation
     updateNavigation();
 }
@@ -234,16 +244,28 @@ function updateNavigation(isLoggedIn = false, user = null) {
         if (user.role === 'admin') {
             navMenu.innerHTML = `
                 <li><a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('todo')">Todo List</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('notes')">Catatan</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('calendar')">Kalender</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('calculator')">Kalkulator</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('timer')">Timer</a></li>
                 <li><a href="#" class="nav-link" onclick="showMarketSection()">Market</a></li>
                 <li><a href="#" class="nav-link" onclick="showSection('football')">Sepak Bola</a></li>
-                <li><a href="#" class="nav-link" onclick="showSection('admin')">Admin Panel</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('settings')">Pengaturan</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('admin')">Admin</a></li>
                 <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
             `;
         } else {
             navMenu.innerHTML = `
                 <li><a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('todo')">Todo List</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('notes')">Catatan</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('calendar')">Kalender</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('calculator')">Kalkulator</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('timer')">Timer</a></li>
                 <li><a href="#" class="nav-link" onclick="showMarketSection()">Market</a></li>
                 <li><a href="#" class="nav-link" onclick="showSection('football')">Sepak Bola</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('settings')">Pengaturan</a></li>
                 <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
             `;
         }
@@ -283,6 +305,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await checkAuth();
     // Load saved background settings
     loadBackgroundSettings();
+    // Also load custom 4K background
+    if (typeof loadCustomBackground === 'function') {
+        loadCustomBackground();
+    }
 });
 
 // ============ BACKGROUND SETTINGS ============
