@@ -235,7 +235,6 @@ function updateNavigation(isLoggedIn = false, user = null) {
             navMenu.innerHTML = `
                 <li><a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a></li>
                 <li><a href="#" class="nav-link" onclick="showMarketSection()">Market</a></li>
-                <li><a href="#" class="nav-link" onclick="showSection('football')">Sepak Bola</a></li>
                 <li><a href="#" class="nav-link" onclick="showSection('admin')">Admin Panel</a></li>
                 <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
             `;
@@ -243,7 +242,6 @@ function updateNavigation(isLoggedIn = false, user = null) {
             navMenu.innerHTML = `
                 <li><a href="#" class="nav-link" onclick="showSection('dashboard')">Dashboard</a></li>
                 <li><a href="#" class="nav-link" onclick="showMarketSection()">Market</a></li>
-                <li><a href="#" class="nav-link" onclick="showSection('football')">Sepak Bola</a></li>
                 <li><a href="#" class="nav-link" onclick="logout()">Logout</a></li>
             `;
         }
