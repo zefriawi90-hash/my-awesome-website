@@ -114,6 +114,49 @@ async function initializeDatabase() {
     )
   `);
 
+  // Add sample football matches
+  const existingMatches = getOne("SELECT COUNT(*) as count FROM football_matches");
+  if (existingMatches.count === 0) {
+    const matches = [
+      // Premier League
+      ['Premier League', 'Manchester City', 'Liverpool', '2026-02-15', '20:00', 2, 1, 'finished'],
+      ['Premier League', 'Arsenal', 'Chelsea', '2026-02-15', '22:30', 3, 0, 'finished'],
+      ['Premier League', 'Manchester United', 'Tottenham', '2026-02-16', '20:00', 1, 1, 'finished'],
+      ['Premier League', 'Newcastle', 'Brighton', '2026-02-16', '22:30', 0, 0, 'scheduled'],
+      ['Premier League', 'Aston Villa', 'West Ham', '2026-02-17', '20:00', 0, 0, 'scheduled'],
+      // La Liga
+      ['La Liga', 'Real Madrid', 'Barcelona', '2026-02-15', '21:00', 2, 3, 'finished'],
+      ['La Liga', 'Atletico Madrid', 'Sevilla', '2026-02-16', '21:00', 1, 0, 'finished'],
+      ['La Liga', 'Valencia', 'Real Sociedad', '2026-02-17', '21:00', 0, 0, 'scheduled'],
+      ['La Liga', 'Villarreal', 'Athletic Bilbao', '2026-02-18', '21:00', 0, 0, 'scheduled'],
+      // Serie A
+      ['Serie A', 'Inter Milan', 'AC Milan', '2026-02-15', '23:45', 1, 2, 'finished'],
+      ['Serie A', 'Juventus', 'Napoli', '2026-02-16', '23:45', 0, 0, 'scheduled'],
+      ['Serie A', 'Roma', 'Lazio', '2026-02-17', '23:45', 0, 0, 'scheduled'],
+      // Ligue 1
+      ['Ligue 1', 'PSG', 'Marseille', '2026-02-16', '22:00', 2, 2, 'finished'],
+      ['Ligue 1', 'Monaco', 'Lyon', '2026-02-17', '22:00', 0, 0, 'scheduled'],
+      ['Ligue 1', 'Nice', 'Lille', '2026-02-18', '22:00', 0, 0, 'scheduled'],
+      // Bundesliga
+      ['Bundesliga', 'Bayern Munich', 'Borussia Dortmund', '2026-02-15', '21:30', 3, 2, 'finished'],
+      ['Bundesliga', 'RB Leipzig', 'Leverkusen', '2026-02-16', '21:30', 0, 0, 'scheduled'],
+      ['Bundesliga', 'Frankfurt', 'Union Berlin', '2026-02-17', '21:30', 0, 0, 'scheduled'],
+      // Liga Indonesia
+      ['Liga Indonesia', 'Persib Bandung', 'Persija Jakarta', '2026-02-15', '15:00', 2, 0, 'finished'],
+      ['Liga Indonesia', 'Arema FC', 'Borneo FC', '2026-02-15', '18:00', 1, 1, 'finished'],
+      ['Liga Indonesia', 'PSM Makassar', 'Bali United', '2026-02-16', '15:00', 0, 0, 'scheduled'],
+      ['Liga Indonesia', 'Madura United', 'Persebaya', '2026-02-16', '18:00', 0, 0, 'scheduled'],
+      ['Liga Indonesia', 'Dewa United', 'Persikabo 1973', '2026-02-17', '15:00', 0, 0, 'scheduled'],
+    ];
+    
+    matches.forEach(m => {
+      db.run(
+        "INSERT INTO football_matches (league_name, home_team, away_team, match_date, match_time, home_score, away_score, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        [m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7]]
+      );
+    });
+  }
+
   // Table for league standings
   db.run(`
     CREATE TABLE IF NOT EXISTS football_standings (
